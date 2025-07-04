@@ -41,8 +41,12 @@ INSTALLED_APPS = [
     #App Intaladas Manualmente#
     'rest_framework',
     'corsheaders',
+    #startapps
     'api',
-
+    'users',
+    #
+    #'rest_framework_simplejwt',
+    
 ]
 
 MIDDLEWARE = [
@@ -130,3 +134,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS ajustes
 CORS_ALLOW_ALL_ORIGINS = True
+
+#indica a Django que utilice un modelo de usuario personalizado en lugar del modelo de usuario predeterminado
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+#jwt
+from datetime import timedelta
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    
+}
+
+SIMPLE_JWT ={
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}

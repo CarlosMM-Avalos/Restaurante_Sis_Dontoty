@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 const AdminDashboard = () => {
   const navigate = useNavigate()
   const handleLogout = () => {
@@ -12,7 +13,7 @@ const AdminDashboard = () => {
    
 
     <div>
-      
+      <Navbar />
       <h2>Panel de Administración</h2>
       <p>Vista para gestionar usuarios, estadísticas, etc.</p>
         <button onClick={handleLogout}>Cerrar sesión</button>

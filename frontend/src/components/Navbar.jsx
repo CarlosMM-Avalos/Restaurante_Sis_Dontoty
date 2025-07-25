@@ -14,7 +14,7 @@ const Navbar = () => {
         if (!token) return;
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const res = await axios.get('http://localhost:8000/api/me/');
+        const res = await axios.get('http://localhost:8000/api/users/me/');
         setUser(res.data);
       } catch (error) {
         console.error("Error al cargar usuario:", error);
@@ -37,7 +37,11 @@ const Navbar = () => {
       <span style={{ marginRight: '20px' }}><strong>🍽️ Restaurante</strong></span>
 
       {user.role === 'cliente' && <Link to="/cliente/menu">Menú</Link>}
-      {user.role === 'encargado' && <Link to="/encargado/pedidos">Pedidos</Link>}
+      {/* {user.role === 'encargado' && <Link to="/encargado/pedidos">Pedidos</Link> } */}
+      {user.role === 'encargado' && (<><Link to="/encargado/pedidos" style={{ marginRight: '10px' }}>Pedidos</Link>
+    <Link to="/encargado/menu">Menús</Link>
+  </>
+)}
       {user.role === 'administrador' && <Link to="/admin/dashboard">Dashboard</Link>}
 
       <span style={{ marginLeft: '20px' }}>👤 {user.username} ({user.role})</span>

@@ -24,7 +24,7 @@ const Login = () => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
 
       // 3. Obtener datos del usuario actual
-      const userRes = await axios.get('http://localhost:8000/api/me/');
+      const userRes = await axios.get('http://localhost:8000/api/users/me/');
       const rol = userRes.data.role;
 
       // 4. Redirigir según rol

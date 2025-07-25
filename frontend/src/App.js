@@ -13,8 +13,8 @@ import EncargadoPedidos from './components/EncargadoPedidos';
 import AdminDashboard from './components/AdminDashboard';
 import PaginaMantencion from './components/PaginaMantencion';
 import PrivateRoute from './components/PrivateRoute';
+import AgregarMenu from './components/AgregarMenu';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-
 
 function App() {
   const token = localStorage.getItem('access_token');
@@ -30,7 +30,9 @@ function App() {
         <Route path="/cliente/menu" element={<PrivateRoute allowedRoles={['cliente']}><ClienteMenu /></PrivateRoute>}/>
         <Route path="/encargado/pedidos" element={<PrivateRoute allowedRoles={['encargado']}><EncargadoPedidos/></PrivateRoute>} />
         <Route path="/admin/dashboard" element={<PrivateRoute allowedRoles={['administrador']}><AdminDashboard/></PrivateRoute>} />
+        
 
+        <Route path="/encargado/menu" element={<AgregarMenu />} />
         
 
 

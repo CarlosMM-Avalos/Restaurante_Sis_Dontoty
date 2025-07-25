@@ -15,7 +15,7 @@ const PrivateRoute = ({children, allowedRoles }) =>{
                 if (!token) return setChecking(false);
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const res = await axios.get("http://localhost:8000/api/me");
+                const res = await axios.get("http://localhost:8000/api/users/me");
                 setUser(res.data);
 
             }   catch (error){

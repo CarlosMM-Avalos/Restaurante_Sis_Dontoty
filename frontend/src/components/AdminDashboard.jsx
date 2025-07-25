@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 
     <div>
       <Navbar />
-      <h2>Panel de Administración</h2>
+      <h2>Panel de Administraciónn</h2>
       <p>Vista para gestionar usuarios, estadísticas, etc.</p>
         <button onClick={handleLogout}>Cerrar sesión</button>
     </div>

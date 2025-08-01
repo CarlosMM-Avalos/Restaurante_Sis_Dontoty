@@ -18,6 +18,6 @@ class PedidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pedido
         fields = '__all__'
-        read_only_fields = ['cliente']
+        read_only_fields = ['cliente','fecha']
 
 

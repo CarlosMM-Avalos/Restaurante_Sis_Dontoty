@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth import get_user_model
 # Create your models here.
 
 class Preparaciones(models.Model):
@@ -26,7 +26,7 @@ class Preparaciones(models.Model):
 
 
 
-from django.contrib.auth import get_user_model
+
 
 User = get_user_model()
 
@@ -40,10 +40,16 @@ class MenuItem(models.Model):
         return self.nombre
 
 class Pedido(models.Model):
+    ESTADOS = [
+        ('pendiente', 'Pendiente'),
+        ('en_preparacion', 'En preparación'),
+        ('listo', 'Listo para entregar'),
+        ('entregado', 'Entregado'),
+    ]
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
-    estado = models.CharField(max_length=20, default='pendiente')  # pendiente / en cocina / listo / entregado
+    estado = models.CharField(max_length=20,choices=ESTADOS , default='pendiente',)  # pendiente / en cocina / listo / entregado
 
     def __str__(self):
         return f"{self.cliente.username} pidió {self.item.nombre}"

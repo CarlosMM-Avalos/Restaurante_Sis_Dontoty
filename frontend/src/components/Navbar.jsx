@@ -34,15 +34,26 @@ const Navbar = () => {
 
   return (
     <nav style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <span style={{ marginRight: '20px' }}><strong>🍽️ Restaurante</strong></span>
+      <span style={{ marginRight: '20px' }}><strong>🍽️ Restaurante Don Toty</strong></span>
 
       {user.role === 'cliente' && <Link to="/cliente/menu">Menú</Link>}
-      {/* {user.role === 'encargado' && <Link to="/encargado/pedidos">Pedidos</Link> } */}
-      {user.role === 'encargado' && (<><Link to="/encargado/pedidos" style={{ marginRight: '10px' }}>Pedidos</Link>
-    <Link to="/encargado/menu">Menús</Link>
-  </>
-)}
-      {user.role === 'administrador' && <Link to="/admin/dashboard">Dashboard</Link>}
+      
+      {user.role === 'encargado' && (
+        <>
+        <Link to="/encargado/pedidos" style={{ marginRight: '10px' }}>Pedidos</Link>
+        <Link to="/encargado/menu" style={{ marginRight: '10px' }}>Menús</Link> 
+        <Link to="/encargado/menu" style={{pointerEvents: 'none', color: 'gray', textDecoration: 'none', cursor: 'not-allowed' }}>proximamente</Link> 
+        </>)}
+
+      {user.role === 'administrador' && (
+        <>
+        <Link to="/admin/dashboard" style={{ marginRight: '10px' }}>Dashboard</Link>
+        <Link to="/cliente/menu" style={{ marginRight: '10px' }}>Menus C</Link>
+        <Link to="/encargado/pedidos" style={{ marginRight: '10px' }}>Pedidos</Link>
+        <Link to="/encargado/menu" style={{ marginRight: '10px' }}>Menu E</Link>
+        <Link to="/encargado/gestion-menu" style={{ marginRight: '10px' }}>Gestionar Platos</Link>
+        </>
+        )}
 
       <span style={{ marginLeft: '20px' }}>👤 {user.username} ({user.role})</span>
       <button onClick={handleLogout} style={{ marginLeft: '10px' }}>Cerrar sesión</button>

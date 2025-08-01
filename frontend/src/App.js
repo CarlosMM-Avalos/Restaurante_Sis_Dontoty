@@ -15,7 +15,7 @@ import PaginaMantencion from './components/PaginaMantencion';
 import PrivateRoute from './components/PrivateRoute';
 import AgregarMenu from './components/AgregarMenu';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-
+import GestionarPlatos from './components/GestionarPlatos';
 function App() {
   const token = localStorage.getItem('access_token');
   return(
@@ -27,20 +27,41 @@ function App() {
          {/* Nuevas rutas protegidas por token */}
         {/* <Route path="/mantencion" element={token ? <PaginaMantencion /> : <Navigate to="/login" />} /> */}
 
-        <Route path="/cliente/menu" element={<PrivateRoute allowedRoles={['cliente']}><ClienteMenu /></PrivateRoute>}/>
-        <Route path="/encargado/pedidos" element={<PrivateRoute allowedRoles={['encargado']}><EncargadoPedidos/></PrivateRoute>} />
-        <Route path="/admin/dashboard" element={<PrivateRoute allowedRoles={['administrador']}><AdminDashboard/></PrivateRoute>} />
+        <Route path="/cliente/menu" element={
+          <PrivateRoute allowedRoles={['cliente', 'administrador']}>
+            <ClienteMenu />
+          </PrivateRoute>}/>
+
+        <Route path="/encargado/pedidos" element={
+          <PrivateRoute allowedRoles={['encargado', 'administrador']}>
+            <EncargadoPedidos/>
+          </PrivateRoute>} />
+
+        <Route path="/admin/dashboard" element={
+          <PrivateRoute allowedRoles={['administrador']}>
+            <AdminDashboard/>
+          </PrivateRoute>} />
         
 
-        <Route path="/encargado/menu" element={<AgregarMenu />} />
+        <Route path="/encargado/menu" element={
+          <PrivateRoute allowedRoles={['encargado', 'administrador']}>
+            <AgregarMenu />
+          </PrivateRoute>} />
         
+
+        <Route path="/encargado/gestion-menu" element={
+          <PrivateRoute allowedRoles={['encargado', 'administrador']}>
+            <GestionarPlatos />
+          </PrivateRoute> } />
+
 
 
 
 
 
         {/* otros */}
-        <Route path="*" element={<Navigate to={token ? "/welcome" : "/login"} />} />
+        <Route path="*" element={
+          <Navigate to={token ? "/welcome" : "/login"} />} />
       </Routes>
     </Router>
     

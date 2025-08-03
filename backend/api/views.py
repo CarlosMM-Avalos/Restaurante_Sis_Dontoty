@@ -50,6 +50,3 @@ class ListarActualizarPedidosView(generics.ListCreateAPIView, generics.UpdateAPI
         return Pedido.objects.none()
     
 
-class PedidoViewSet(viewsets.ModelViewSet):
-    queryset = Pedido.objects.all()
-    serializer_class = PedidoSerializer

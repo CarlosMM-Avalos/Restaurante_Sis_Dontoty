@@ -52,4 +52,4 @@ class Pedido(models.Model):
     estado = models.CharField(max_length=20,choices=ESTADOS , default='pendiente',)  # pendiente / en cocina / listo / entregado
 
     def __str__(self):
-        return f"{self.cliente.username} pidió {self.item.nombre}"
+        return f"{self.cliente.username} pidió {self.item.nombre} y se encuentra {self.estado}"

@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     #App Intaladas Manualmente#
     'rest_framework',
     'corsheaders',
+    'django_filters',
     #startapps
     'api',
     'users',
     #
     #'rest_framework_simplejwt',
+    
     
 ]
 
@@ -144,7 +146,9 @@ from datetime import timedelta
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     
 }
 

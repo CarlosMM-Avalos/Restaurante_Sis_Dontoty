@@ -3,6 +3,7 @@ from rest_framework import viewsets,generics, permissions
 from .models import Preparaciones,MenuItem, Pedido
 from .serializers import PreparacionesSerializer,MenuItemSerializer, PedidoSerializer
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 class PreparacionesViewSet(viewsets.ModelViewSet):
@@ -58,3 +59,11 @@ class CancelarPedidoView(generics.UpdateAPIView):
     def get_queryset(self):
         # Solo permite acceder a sus propios pedidos
         return Pedido.objects.filter(cliente=self.request.user)
+    
+
+class HistorialPedidosView(generics.ListAPIView):
+    queryset = Pedido.objects.all().order_by('-fecha')
+    serializer_class = PedidoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['fecha', 'cliente','estado'] 

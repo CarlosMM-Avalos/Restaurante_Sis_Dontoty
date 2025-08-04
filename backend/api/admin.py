@@ -3,4 +3,7 @@ from .models import MenuItem, Pedido
 # Register your models here.
 
 admin.site.register(MenuItem)
-admin.site.register(Pedido)
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cliente', 'item', 'estado', 'fecha')  # campos que quieras mostrar
+
+admin.site.register(Pedido, PedidoAdmin)

@@ -60,9 +60,11 @@ const EncargadoPedidos = () => {
       <ul>
         {pedidos.map((pedido) => (
           <li key={pedido.id}>
-            <p><strong>Cliente:</strong> {pedido.cliente}</p>
-            <p><strong>Plato:</strong> {pedido.item}</p>
+            <p><strong>Cliente:</strong> {pedido.cliente_nombre}</p>
+            <p><strong>Plato:</strong> {pedido.item_nombre}</p>
             <p><strong>Estado:</strong> {pedido.estado_display}</p>
+            <p><strong>Fecha del pedido:</strong> {new Date(pedido.fecha).toLocaleString()}</p>
+
             
             <select
               value={pedido.estado}
@@ -72,6 +74,7 @@ const EncargadoPedidos = () => {
               <option value="en_preparacion">En preparación</option>
               <option value="listo">Listo para entregar</option>
               <option value="entregado">Entregado</option>
+              <option value="cancelado">Cancelado</option>
             </select>
             <hr />
           </li>

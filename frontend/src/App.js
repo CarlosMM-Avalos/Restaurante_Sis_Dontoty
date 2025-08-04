@@ -17,6 +17,7 @@ import PrivateRoute from './components/PrivateRoute';
 import AgregarMenu from './components/AgregarMenu';
 import GestionarPlatos from './components/GestionarPlatos';
 import MisPedidos from './components/MisPedidos';
+import HistorialPedidos from './components/HistorialPedidos';
 // ///////////////////////////////////////
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -65,7 +66,11 @@ function App() {
           </PrivateRoute> } />
 
 
-        
+        <Route path="/admin/historial" element={
+          <PrivateRoute allowedRoles={['administrador', 'encargado']}>
+            <HistorialPedidos />
+          </PrivateRoute> } />
+
 
           
 

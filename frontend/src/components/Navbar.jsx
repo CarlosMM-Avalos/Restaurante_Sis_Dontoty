@@ -57,6 +57,9 @@ const Navbar = () => {
         <Link to="/encargado/menu" style={{ marginRight: '10px' }}>Menu E</Link>
         <Link to="/encargado/gestion-menu" style={{ marginRight: '10px' }}>Gestionar Platos</Link>
         <Link to="/cliente/mis-pedidos" style={{ marginRight: '10px' }}>pedidos cliente</Link>
+        <Link to="/admin/historial" style={{ marginRight: '10px' }}>historial</Link>
+
+        
         </>
         )}
 

@@ -16,7 +16,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
 
 class PedidoSerializer(serializers.ModelSerializer):
     estado_display = serializers.SerializerMethodField()
-
+    item_nombre = serializers.SerializerMethodField()
     class Meta:
         model = Pedido
         fields = '__all__'
@@ -24,5 +24,8 @@ class PedidoSerializer(serializers.ModelSerializer):
 
     def get_estado_display(self, obj):
         return obj.get_estado_display()
+    
+    def get_item_nombre(self, obj):
+        return obj.item.nombre
 
 

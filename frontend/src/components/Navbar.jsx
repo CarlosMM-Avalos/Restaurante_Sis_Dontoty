@@ -36,7 +36,11 @@ const Navbar = () => {
     <nav style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
       <span style={{ marginRight: '20px' }}><strong>🍽️ Restaurante Don Toty</strong></span>
 
-      {user.role === 'cliente' && <Link to="/cliente/menu">Menú</Link>}
+      {user.role === 'cliente' && (
+        <>
+        <Link to="/cliente/menu" style={{ marginRight: '10px' }}>Menú</Link>
+        <Link to="/cliente/mis-pedidos" style={{ marginRight: '10px' }}>pedidos cliente</Link>
+        </>)}
       
       {user.role === 'encargado' && (
         <>
@@ -52,6 +56,7 @@ const Navbar = () => {
         <Link to="/encargado/pedidos" style={{ marginRight: '10px' }}>Pedidos</Link>
         <Link to="/encargado/menu" style={{ marginRight: '10px' }}>Menu E</Link>
         <Link to="/encargado/gestion-menu" style={{ marginRight: '10px' }}>Gestionar Platos</Link>
+        <Link to="/cliente/mis-pedidos" style={{ marginRight: '10px' }}>pedidos cliente</Link>
         </>
         )}
 

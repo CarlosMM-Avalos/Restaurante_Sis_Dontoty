@@ -10,8 +10,6 @@ class PreparacionesViewSet(viewsets.ModelViewSet):
     serializer_class = PreparacionesSerializer
 
 
-
-
 class MenuDelDiaView(generics.ListAPIView):
     serializer_class = MenuItemSerializer
     queryset = MenuItem.objects.filter(disponible_hoy=True)
@@ -23,13 +21,6 @@ class CrearPedidoView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(cliente=self.request.user)
-
-        
-#BORRAR
-# class MenuItemCreateListView(generics.ListCreateAPIView):
-#      queryset = MenuItem.objects.all()
-#      serializer_class = MenuItemSerializer
-#      permission_classes = [IsAuthenticated]
 
 
 class MenuItemViewSet(viewsets.ModelViewSet):
@@ -50,3 +41,20 @@ class ListarActualizarPedidosView(generics.ListCreateAPIView, generics.UpdateAPI
         return Pedido.objects.none()
     
 
+class MisPedidosView(generics.ListAPIView):
+    serializer_class = PedidoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Pedido.objects.filter(cliente=self.request.user)
+    
+
+
+class CancelarPedidoView(generics.UpdateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Solo permite acceder a sus propios pedidos
+        return Pedido.objects.filter(cliente=self.request.user)

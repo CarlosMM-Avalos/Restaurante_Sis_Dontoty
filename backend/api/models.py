@@ -45,6 +45,7 @@ class Pedido(models.Model):
         ('en_preparacion', 'En preparación'),
         ('listo', 'Listo para entregar'),
         ('entregado', 'Entregado'),
+        ('cancelado', 'Cancelado'),
     ]
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)

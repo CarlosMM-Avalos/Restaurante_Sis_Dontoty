@@ -6,6 +6,7 @@ import {
   actualizarPreparacion,
 } from './services/api';
 import './App.css';
+// componentes
 import Login from './components/Login';
 import Welcome from './components/Welcome';
 import ClienteMenu from './components/ClienteMenu';
@@ -14,8 +15,11 @@ import AdminDashboard from './components/AdminDashboard';
 import PaginaMantencion from './components/PaginaMantencion';
 import PrivateRoute from './components/PrivateRoute';
 import AgregarMenu from './components/AgregarMenu';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import GestionarPlatos from './components/GestionarPlatos';
+import MisPedidos from './components/MisPedidos';
+// ///////////////////////////////////////
+
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 function App() {
   const token = localStorage.getItem('access_token');
   return(
@@ -53,6 +57,17 @@ function App() {
           <PrivateRoute allowedRoles={['encargado', 'administrador']}>
             <GestionarPlatos />
           </PrivateRoute> } />
+
+          
+        <Route path="/cliente/mis-pedidos" element={
+          <PrivateRoute allowedRoles={['cliente', 'administrador']}>
+            <MisPedidos />
+          </PrivateRoute> } />
+
+
+        
+
+          
 
 
 

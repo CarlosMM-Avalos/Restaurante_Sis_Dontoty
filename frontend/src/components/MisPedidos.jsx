@@ -1,77 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-
 const MisPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
 
-  const cancelarPedido = async (id) => {
-  try {
-    const token = localStorage.getItem("access_token");
-    await axios.patch(`http://localhost:8000/api/cancelar-pedido/${id}/`, {
-      estado: 'cancelado'
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    // Actualizar la lista
-    const res = await axios.get("http://localhost:8000/api/mis-pedidos/", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    setPedidos(res.data);
-
-  } catch (err) {
-    console.error("Error al cancelar el pedido:", err);
-  }
-};
-
-
   useEffect(() => {
-    const fetchPedidos = async () => {
-      try {
-        const token = localStorage.getItem("access_token");
-        const res = await axios.get("http://localhost:8000/api/mis-pedidos/", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setPedidos(res.data);
-      } catch (err) {
-        console.error("Error al cargar pedidos del cliente:", err);
-      }
-    };
-
-    fetchPedidos();
+    const token = localStorage.getItem('access_token');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    
+    axios.get('http://localhost:8000/api/mis-pedidos/')
+      .then(res => setPedidos(res.data))
+      .catch(err => console.error('Error al cargar pedidos', err));
   }, []);
-
-  
 
   return (
     <div>
-        <Navbar />
+      <Navbar />
       <h2>Mis Pedidos</h2>
       {pedidos.length === 0 ? (
-        <p>No tienes pedidos aún.</p>
+        <p>No has realizado pedidos aún.</p>
       ) : (
         <ul>
-          {pedidos.map(pedido => (
+          {pedidos.map((pedido) => (
             <li key={pedido.id}>
-              {pedido.item_nombre} - Estado: <strong>{pedido.estado_display}</strong>
-
-              {pedido.estado === 'pendiente' && (
-  <button onClick={() => cancelarPedido(pedido.id)} style={{marginLeft: '10px'}}>
-    Cancelar
-  </button>
-)}
+              <p><strong>Fecha:</strong> {pedido.fecha_formateada}</p>
+              <p><strong>Estado:</strong> {pedido.estado_display}</p>
+              <p><strong>Platos:</strong></p>
+              <ul>
+                {pedido.items.map(item => (
+                  <li key={item.id}>
+                    {item.menu_item_nombre} x {item.cantidad}
+                  </li>
+                ))}
+              </ul>
             </li>
-            
-            
-          ))  }
+          ))}
         </ul>
       )}
     </div>

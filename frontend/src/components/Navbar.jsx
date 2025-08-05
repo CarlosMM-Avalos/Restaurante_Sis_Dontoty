@@ -40,13 +40,16 @@ const Navbar = () => {
         <>
         <Link to="/cliente/menu" style={{ marginRight: '10px' }}>Menú</Link>
         <Link to="/cliente/mis-pedidos" style={{ marginRight: '10px' }}>pedidos cliente</Link>
+        <Link to="/cliente/historial" style={{ marginRight: '10px' }}>historial cliente</Link>
         </>)}
       
       {user.role === 'encargado' && (
         <>
         <Link to="/encargado/pedidos" style={{ marginRight: '10px' }}>Pedidos</Link>
         <Link to="/encargado/menu" style={{ marginRight: '10px' }}>Menús</Link> 
-        <Link to="/encargado/menu" style={{pointerEvents: 'none', color: 'gray', textDecoration: 'none', cursor: 'not-allowed' }}>proximamente</Link> 
+        <Link to="/encargado/menu" style={{marginRight: '10px' ,pointerEvents: 'none', color: 'gray', textDecoration: 'none', cursor: 'not-allowed' }}>proximamente</Link> 
+        <Link to="/admin/historial" style={{ marginRight: '10px' }}>historial</Link>
+         <Link to="/encargado/dashboard" style={{ marginRight: '10px' }}>dash encar</Link>
         </>)}
 
       {user.role === 'administrador' && (
@@ -58,6 +61,9 @@ const Navbar = () => {
         <Link to="/encargado/gestion-menu" style={{ marginRight: '10px' }}>Gestionar Platos</Link>
         <Link to="/cliente/mis-pedidos" style={{ marginRight: '10px' }}>pedidos cliente</Link>
         <Link to="/admin/historial" style={{ marginRight: '10px' }}>historial</Link>
+        <Link to="/cliente/historial" style={{ marginRight: '10px' }}>historial cliente</Link>
+        <Link to="/encargado/dashboard" style={{ marginRight: '10px' }}>dash encar</Link>
+
 
         
         </>

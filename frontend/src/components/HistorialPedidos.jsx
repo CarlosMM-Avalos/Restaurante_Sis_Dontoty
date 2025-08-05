@@ -59,7 +59,12 @@ const HistorialPedidos = () => {
         {pedidos.map(p => (
           <li key={p.id}>
             <strong>Cliente:</strong> {p.cliente_nombre} <br />
-            <strong>Plato:</strong> {p.item_nombre} <br />
+            <strong>Platos:</strong>
+              <ul>
+                {p.items.map((item, index) => (
+                  <li key={index}>{item.menu_item_nombre} x {item.cantidad}</li>
+                ))}
+              </ul> <br />
             <strong>Estado:</strong> {p.estado_display} <br />
             <strong>Fecha:</strong> {new Date(p.fecha).toLocaleString()} <br /><br />
           </li>

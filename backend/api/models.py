@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+
+
 # Create your models here.
 
 class Preparaciones(models.Model):
@@ -48,9 +51,20 @@ class Pedido(models.Model):
         ('cancelado', 'Cancelado'),
     ]
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    #se elimino el campo item
     fecha = models.DateTimeField(auto_now_add=True)
     estado = models.CharField(max_length=20,choices=ESTADOS , default='pendiente',)  # pendiente / en cocina / listo / entregado
 
     def __str__(self):
-        return f"{self.cliente.username} pidió {self.item.nombre} y se encuentra {self.estado}"
+        items = ", ".join(
+        [f"{pi.menu_item.nombre} x{pi.cantidad}" for pi in self.items.all()]
+        )
+        return f"Pedido de {self.cliente.username} - {items}"
+    
+class PedidoItem(models.Model):
+    pedido = models.ForeignKey(Pedido, related_name='items', on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.menu_item.nombre} x {self.cantidad}'

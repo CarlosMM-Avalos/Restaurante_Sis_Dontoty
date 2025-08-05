@@ -30,16 +30,20 @@ class MenuItemViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class ListarActualizarPedidosView(generics.ListCreateAPIView, generics.UpdateAPIView):
-    queryset = Pedido.objects.all().order_by('-fecha')
+class ListarPedidosView(generics.ListAPIView):
     serializer_class = PedidoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        if user.role == 'encargado' or 'administrador':
+        if user.role in ['encargado', 'administrador']:
             return Pedido.objects.all().order_by('-fecha')
         return Pedido.objects.none()
+    
+class ActualizarPedidoView(generics.UpdateAPIView):
+    serializer_class = PedidoSerializer
+    queryset = Pedido.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
     
 
 class MisPedidosView(generics.ListAPIView):
@@ -67,3 +71,19 @@ class HistorialPedidosView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['fecha', 'cliente','estado'] 
+
+
+class CrearPedidoView(generics.CreateAPIView):
+    serializer_class = PedidoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(cliente=self.request.user)
+
+
+class HistorialPedidosClienteView(generics.ListAPIView):
+    serializer_class = PedidoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Pedido.objects.filter(cliente=self.request.user).order_by('-fecha')

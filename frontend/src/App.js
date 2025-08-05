@@ -18,6 +18,7 @@ import AgregarMenu from './components/AgregarMenu';
 import GestionarPlatos from './components/GestionarPlatos';
 import MisPedidos from './components/MisPedidos';
 import HistorialPedidos from './components/HistorialPedidos';
+import EncargadoDashboard from './components/EncargadoDashboard';
 // ///////////////////////////////////////
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -70,6 +71,18 @@ function App() {
           <PrivateRoute allowedRoles={['administrador', 'encargado']}>
             <HistorialPedidos />
           </PrivateRoute> } />
+
+        <Route path="/cliente/historial" element={
+          <PrivateRoute allowedRoles={['administrador', 'encargado', 'cliente']}>
+            <MisPedidos />
+          </PrivateRoute> } />
+
+
+        <Route path="/encargado/dashboard" element={
+          <PrivateRoute allowedRoles={['encargado','administrador']}>
+            <EncargadoDashboard />
+          </PrivateRoute> } />
+
 
 
           

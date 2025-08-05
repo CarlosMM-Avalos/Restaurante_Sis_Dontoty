@@ -61,7 +61,14 @@ const EncargadoPedidos = () => {
         {pedidos.map((pedido) => (
           <li key={pedido.id}>
             <p><strong>Cliente:</strong> {pedido.cliente_nombre}</p>
-            <p><strong>Plato:</strong> {pedido.item_nombre}</p>
+            <p><strong>Platos:</strong></p>
+              <ul>
+                {pedido.items.map((item, index) => (
+                  <li key={index}>
+                    {item.menu_item_nombre} x {item.cantidad}
+                  </li>
+                ))}
+              </ul>
             <p><strong>Estado:</strong> {pedido.estado_display}</p>
             <p><strong>Fecha del pedido:</strong> {new Date(pedido.fecha).toLocaleString()}</p>
 

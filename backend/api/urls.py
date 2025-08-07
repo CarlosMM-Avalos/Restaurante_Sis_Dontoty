@@ -14,7 +14,10 @@ from .views import (
     ActualizarPedidoView,
     ActualizarDisponibilidadView,
     ResumenDiarioPedidos,
-    ResumenEstadosPedidosView,)
+    ResumenEstadosPedidosView,
+    UsuarioAdminListCreateView,
+    UsuarioAdminRetrieveUpdateDestroyView,
+    ListCreateUsersView, RetrieveUpdateDestroyUserView,)
 
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menu-items')
@@ -35,8 +38,10 @@ urlpatterns = [
     path('menu-items/<int:pk>/disponibilidad/', ActualizarDisponibilidadView.as_view(), name='actualizar-disponibilidad'),
     path('resumen-diario/', ResumenDiarioPedidos.as_view(), name='resumen-diario'),
     path('resumen-pedidos-estados/', ResumenEstadosPedidosView.as_view(), name='resumen-estados'),
-
-
+    path('admin/usuarios/', UsuarioAdminListCreateView.as_view(), name='admin-usuarios'),
+    path('admin/usuarios/<int:pk>/', UsuarioAdminRetrieveUpdateDestroyView.as_view(), name='admin-usuarios-detalle'),
+    path('users/', ListCreateUsersView.as_view(), name='listar-usuarios'),
+    path('users/<int:pk>/', RetrieveUpdateDestroyUserView.as_view(), name='editar-usuario'),
 
 
     

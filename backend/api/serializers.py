@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Preparaciones,MenuItem, Pedido, PedidoItem
+from django.contrib.auth import get_user_model
 
 class PreparacionesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,3 +46,34 @@ class PedidoSerializer(serializers.ModelSerializer):
         for item_data in items_data:
             PedidoItem.objects.create(pedido=pedido, **item_data)
         return pedido
+    
+
+
+
+User = get_user_model()
+
+class UsuarioAdminSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'role', 'is_active', 'password']
+        read_only_fields = ['id']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)  # Muy importante
+        user.save()
+        return user
+    
+
+
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'role']

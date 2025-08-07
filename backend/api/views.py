@@ -1,18 +1,20 @@
 from django.shortcuts import render
 from rest_framework import viewsets,generics, permissions
 from .models import Preparaciones,MenuItem, Pedido
-from .serializers import PreparacionesSerializer,MenuItemSerializer, PedidoSerializer
+from .serializers import PreparacionesSerializer,MenuItemSerializer, PedidoSerializer,UsuarioAdminSerializer
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
 from django.db.models import Count
 from .models import PedidoItem
 from collections import defaultdict
+from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
 
 
+from .serializers import UsuarioAdminSerializer
 
 # Create your views here.
 
@@ -155,3 +157,34 @@ class ResumenEstadosPedidosView(APIView):
     def get(self, request):
         resumen = Pedido.objects.values('estado').annotate(total=Count('id'))
         return Response(resumen)
+    
+User = get_user_model()
+
+class UsuarioAdminListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsuarioAdminSerializer
+    permission_classes = [permissions.IsAdminUser]  # Solo superusuarios
+
+
+class UsuarioAdminRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsuarioAdminSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class ListCreateUsersView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class UsuarioAdminListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsuarioAdminSerializer
+    permission_classes = [permissions.IsAdminUser]

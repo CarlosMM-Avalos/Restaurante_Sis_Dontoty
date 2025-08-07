@@ -21,6 +21,7 @@ import HistorialPedidos from './components/HistorialPedidos';
 import EncargadoDashboard from './components/EncargadoDashboard';
 import ResumenDiarioAdmin from './components/ResumenDiarioAdmin';
 import ChartResumenPedidos from './components/ChartResumenPedidos';
+import AdminUsuarios from './components/AdminUsuarios'; 
 // ///////////////////////////////////////
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -95,6 +96,13 @@ function App() {
           <PrivateRoute allowedRoles={['administrador', 'encargado']}>
             <ChartResumenPedidos />
           </PrivateRoute>  } />
+
+
+        <Route path="/admin/usuarios" element={
+          <PrivateRoute allowedRoles={['administrador']}>
+            <AdminUsuarios />
+          </PrivateRoute>  } />
+
 
 
 

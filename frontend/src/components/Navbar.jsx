@@ -65,6 +65,7 @@ const Navbar = () => {
         <Link to="/encargado/dashboard" style={{ marginRight: '10px' }}>dash encar</Link>
         <Link to="/admin/resumen" style={{ marginRight: '10px' }}>dash admin</Link>
         {/* <Link to="/admin/chart-estados" style={{ marginRight: '10px' }}>dash admin2</Link> */}
+        <Link to="/admin/usuarios" style={{ marginRight: '10px' }}>user admin</Link>
 
 
         

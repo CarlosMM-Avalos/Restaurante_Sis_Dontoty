@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from './Navbar';
 const Welcome = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ const Welcome = () => {
 
   return (
     <div>
+      <Navbar />
       <h2>¡Bienvenido, {user.username}!</h2>
       <p>Tu rol es: {user.role}</p>
         <button onClick={handleLogout}>Cerrar sesión</button>

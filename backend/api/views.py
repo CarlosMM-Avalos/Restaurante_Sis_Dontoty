@@ -4,6 +4,12 @@ from .models import Preparaciones,MenuItem, Pedido
 from .serializers import PreparacionesSerializer,MenuItemSerializer, PedidoSerializer
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from rest_framework import status
+
 # Create your views here.
 
 class PreparacionesViewSet(viewsets.ModelViewSet):
@@ -15,6 +21,7 @@ class MenuDelDiaView(generics.ListAPIView):
     serializer_class = MenuItemSerializer
     queryset = MenuItem.objects.filter(disponible_hoy=True)
     permission_classes = [permissions.AllowAny]
+
 
 class CrearPedidoView(generics.CreateAPIView):
     serializer_class = PedidoSerializer
@@ -40,6 +47,7 @@ class ListarPedidosView(generics.ListAPIView):
             return Pedido.objects.all().order_by('-fecha')
         return Pedido.objects.none()
     
+
 class ActualizarPedidoView(generics.UpdateAPIView):
     serializer_class = PedidoSerializer
     queryset = Pedido.objects.all()
@@ -53,7 +61,6 @@ class MisPedidosView(generics.ListAPIView):
     def get_queryset(self):
         return Pedido.objects.filter(cliente=self.request.user)
     
-
 
 class CancelarPedidoView(generics.UpdateAPIView):
     queryset = Pedido.objects.all()
@@ -82,8 +89,30 @@ class CrearPedidoView(generics.CreateAPIView):
 
 
 class HistorialPedidosClienteView(generics.ListAPIView):
+
     serializer_class = PedidoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Pedido.objects.filter(cliente=self.request.user).order_by('-fecha')
+    
+
+
+
+class ActualizarDisponibilidadView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        try:
+            menu_item = MenuItem.objects.get(pk=pk)
+            disponible = request.data.get("disponible_hoy")
+
+            if disponible is not None:
+                menu_item.disponible_hoy = disponible
+                menu_item.save()
+                return Response({"message": "Disponibilidad actualizada"}, status=status.HTTP_200_OK)
+
+            return Response({"error": "Falta el campo 'disponible_hoy'"}, status=status.HTTP_400_BAD_REQUEST)
+
+        except MenuItem.DoesNotExist:
+            return Response({"error": "Plato no encontrado"}, status=status.HTTP_404_NOT_FOUND)

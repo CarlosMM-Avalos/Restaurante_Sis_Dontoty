@@ -11,7 +11,8 @@ from .views import (
     HistorialPedidosView,
     HistorialPedidosClienteView,
     ListarPedidosView,
-    ActualizarPedidoView)
+    ActualizarPedidoView,
+    ActualizarDisponibilidadView)
 
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menu-items')
@@ -29,6 +30,8 @@ urlpatterns = [
     path('mis-pedidos/', HistorialPedidosClienteView.as_view(), name='historial-pedidos'),
     path('pedidos/', ListarPedidosView.as_view(), name='listar-pedidos'),
     path('pedidos/<int:pk>/', ActualizarPedidoView.as_view(), name='actualizar-pedido'),
+    path('menu-items/<int:pk>/disponibilidad/', ActualizarDisponibilidadView.as_view(), name='actualizar-disponibilidad'),
+
 
 
 

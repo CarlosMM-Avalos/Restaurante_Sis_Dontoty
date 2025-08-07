@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+import GestionarDisponibilidadMenu from './GestionarDisponibilidadMenu.jsx';
 
 const EncargadoDashboard = () => {
   const [pedidos, setPedidos] = useState([]);
@@ -50,7 +51,7 @@ const EncargadoDashboard = () => {
     <div>
       <Navbar />
       <h2>📋 Panel del Encargado</h2>
-
+      <GestionarDisponibilidadMenu />
       <section>
         <h3>📦 Pedidos actuales</h3>
         {pedidos.length === 0 ? <p>No hay pedidos aún.</p> : (

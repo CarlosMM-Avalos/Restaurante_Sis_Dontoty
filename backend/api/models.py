@@ -25,12 +25,6 @@ class Preparaciones(models.Model):
         return self.nombre
     
 
-
-
-
-
-
-
 User = get_user_model()
 
 class MenuItem(models.Model):
@@ -53,7 +47,7 @@ class Pedido(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     #se elimino el campo item
     fecha = models.DateTimeField(auto_now_add=True)
-    estado = models.CharField(max_length=20,choices=ESTADOS , default='pendiente',)  # pendiente / en cocina / listo / entregado
+    estado = models.CharField(max_length=20,choices=ESTADOS , default='pendiente',) 
 
     def __str__(self):
         items = ", ".join(

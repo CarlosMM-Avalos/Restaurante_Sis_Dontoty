@@ -12,7 +12,9 @@ from .views import (
     HistorialPedidosClienteView,
     ListarPedidosView,
     ActualizarPedidoView,
-    ActualizarDisponibilidadView)
+    ActualizarDisponibilidadView,
+    ResumenDiarioPedidos,
+    ResumenEstadosPedidosView,)
 
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menu-items')
@@ -31,6 +33,8 @@ urlpatterns = [
     path('pedidos/', ListarPedidosView.as_view(), name='listar-pedidos'),
     path('pedidos/<int:pk>/', ActualizarPedidoView.as_view(), name='actualizar-pedido'),
     path('menu-items/<int:pk>/disponibilidad/', ActualizarDisponibilidadView.as_view(), name='actualizar-disponibilidad'),
+    path('resumen-diario/', ResumenDiarioPedidos.as_view(), name='resumen-diario'),
+    path('resumen-pedidos-estados/', ResumenEstadosPedidosView.as_view(), name='resumen-estados'),
 
 
 

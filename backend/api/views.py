@@ -4,11 +4,15 @@ from .models import Preparaciones,MenuItem, Pedido
 from .serializers import PreparacionesSerializer,MenuItemSerializer, PedidoSerializer
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 from rest_framework import status
+
+from django.db.models import Count
+from .models import PedidoItem
+from collections import defaultdict
+
+
 
 # Create your views here.
 
@@ -97,8 +101,6 @@ class HistorialPedidosClienteView(generics.ListAPIView):
         return Pedido.objects.filter(cliente=self.request.user).order_by('-fecha')
     
 
-
-
 class ActualizarDisponibilidadView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -116,3 +118,40 @@ class ActualizarDisponibilidadView(APIView):
 
         except MenuItem.DoesNotExist:
             return Response({"error": "Plato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ResumenDiarioPedidos(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        resumen = defaultdict(lambda: {"total_pedidos": 0, "platos": defaultdict(int)})
+
+        items = PedidoItem.objects.select_related('pedido', 'menu_item')
+
+        for item in items:
+            fecha = item.pedido.fecha.date().isoformat()
+            resumen[fecha]["total_pedidos"] += 1
+            resumen[fecha]["platos"][item.menu_item.nombre] += item.cantidad
+
+        respuesta = []
+        for fecha, data in resumen.items():
+            platos = data["platos"]
+            plato_mas_pedido = max(platos, key=platos.get)
+            respuesta.append({
+                "fecha": fecha,
+                "total_pedidos": data["total_pedidos"],
+                "plato_mas_pedido": plato_mas_pedido,
+                "total_por_plato": platos
+            })
+
+            
+
+        return Response(respuesta)
+    
+
+class ResumenEstadosPedidosView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        resumen = Pedido.objects.values('estado').annotate(total=Count('id'))
+        return Response(resumen)

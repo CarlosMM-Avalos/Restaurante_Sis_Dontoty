@@ -19,6 +19,8 @@ import GestionarPlatos from './components/GestionarPlatos';
 import MisPedidos from './components/MisPedidos';
 import HistorialPedidos from './components/HistorialPedidos';
 import EncargadoDashboard from './components/EncargadoDashboard';
+import ResumenDiarioAdmin from './components/ResumenDiarioAdmin';
+import ChartResumenPedidos from './components/ChartResumenPedidos';
 // ///////////////////////////////////////
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -82,6 +84,19 @@ function App() {
           <PrivateRoute allowedRoles={['encargado','administrador']}>
             <EncargadoDashboard />
           </PrivateRoute> } />
+
+        <Route path="/admin/resumen" element={
+          <PrivateRoute allowedRoles={['administrador']}>
+            <ResumenDiarioAdmin />
+          </PrivateRoute>  } />
+
+
+        <Route path="/admin/chart-estados" element={
+          <PrivateRoute allowedRoles={['administrador', 'encargado']}>
+            <ChartResumenPedidos />
+          </PrivateRoute>  } />
+
+
 
 
 
